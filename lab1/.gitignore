@@ -1,1 +1,12 @@
+# Ignore build directory
 build/
+
+# Ignore GHDL compiled object files and libraries
+*.o
+*.cf
+work-obj93.cf
+
+# Ignore executables (add your entity names here)
+half_adder_tb
+full_adder_tb
+e~*
