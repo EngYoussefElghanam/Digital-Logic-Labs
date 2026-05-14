@@ -29,9 +29,9 @@ Derived via Karnaugh Maps (K-maps), the excitation equations for the JK flip-flo
 
 | Flip-Flop | J Input Equation | K Input Equation |
 | :--- | :--- | :--- |
-| **FF2** | $(NOT\ Q_2) \text{ AND } (NOT\ X)$ | $Q_2 \text{ AND } (NOT\ X)$ |
-| **FF1** | $(NOT\ Q_1) \text{ AND } Q_0 \text{ AND } X$ | $Q_1 \text{ AND } Q_0 \text{ AND } X$ |
-| **FF0** | $(NOT\ Q_0) \text{ AND } X$ | $Q_0 \text{ AND } X$ |
+| **FF2** | $(NOT\ X)$ | $(NOT\ X)$ |
+| **FF1** | $Q_0 \text{ AND } X$ | $Q_0 \text{ AND } X$ |
+| **FF0** | $X$ | $X$ |
 
 ## Files in this Repository
 * **JKFF.vhdl**: VHDL behavioral description of the JK Flip-Flop component.
