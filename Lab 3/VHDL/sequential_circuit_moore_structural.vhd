@@ -28,9 +28,8 @@ architecture Structural of moore_structural is
   -- Internal signals for the next state logic (Flip-Flop inputs)
   signal J0, K0, J1, K1, J2, K2 : std_logic;
 
-  -- The JK flip-flop component requires a reset, but the interface 
-  -- doesn't provide one. We tie it to '0' so it doesn't stay stuck in reset.
-  signal rst_tie : std_logic := '0';
+  
+  signal rst_tie : std_logic := '1';
 
 begin
 
