@@ -33,7 +33,7 @@ begin
   -- ==========================================
   -- Instantiate the Structural Model (UUT)
   -- ==========================================
-  UUT : moore_structuralPORT
+  UUT : moore_structural PORT
   map (
   X   => X_tb,
   Clk => Clk_tb,
