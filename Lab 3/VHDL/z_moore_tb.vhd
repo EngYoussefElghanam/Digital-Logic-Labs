@@ -20,6 +20,8 @@ architecture Behavioral of tb_moore_structural is
   signal X_tb   : std_logic := '0';
   signal Clk_tb : std_logic := '0';
   signal Z_tb   : std_logic;
+  signal rst_tie : std_logic := '1'; -- Starts the system in reset
+  
 
   -- 3. Clock period definition
   constant CLK_PERIOD : time := 10 ns;
@@ -57,6 +59,11 @@ begin
   stimulus_process : process
   begin
     -- Wait for initial system stabilization
+    rst_tie <= '1';   -- Activate reset
+    X_tb    <= '0';   -- Default input
+    wait for CLK_PERIOD;
+    
+    rst_tie <= '0';   -- Release reset
     wait for CLK_PERIOD;
 
     report "===========================================================";
