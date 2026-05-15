@@ -60,7 +60,7 @@ begin
   -- ==========================================
 
   -- Instantiate Flip-Flop 2
-  FF2 : jk_flipflopPORT
+  FF2 : jk_flipflop PORT
   map(
   clk => Clk,
   rst => rst_tie,
@@ -70,7 +70,7 @@ begin
   );
 
   -- Instantiate Flip-Flop 1
-  FF1 : jk_flipflopPORT
+  FF1 : jk_flipflop PORT
   map(
   clk => Clk,
   rst => rst_tie,
@@ -80,7 +80,7 @@ begin
   );
 
   -- Instantiate Flip-Flop 0
-  FF0 : jk_flipflopPORT
+  FF0 : jk_flipflop PORT
   map(
   clk => Clk,
   rst => rst_tie,
