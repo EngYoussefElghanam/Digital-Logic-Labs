@@ -298,64 +298,78 @@ The lab successfully demonstrated the design of sequential circuits using both M
 ## Moore Architecture
 
 ```vhdl
--- sequential_circuit_moore.vhd
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
 
-entity sequential_circuit_moore is
-    Port (
-        X   : in  STD_LOGIC;
-        Clk : in  STD_LOGIC;
-        Z   : out STD_LOGIC
-    );
-end sequential_circuit_moore;
 
-architecture Behavioral of sequential_circuit_moore is
-    type state_type is (
-        S_0_EVEN, S_0_ODD, S_1_EVEN, S_1_ODD,
-        S_2_EVEN, S_2_ODD, S_3_EVEN, S_3_ODD
+entity moore_structural is
+  port (
+    X   : in std_logic;
+    Clk : in std_logic;
+    Z   : out std_logic
+  );
+
+end moore_structural;
+
+architecture Structural of moore_structural is
+
+  component jk_flipflop
+    port (
+      clk : in std_logic;
+      rst : in std_logic;
+      J   : in std_logic;
+      K   : in std_logic;
+      Q   : out std_logic
     );
-    signal current_state, next_state : state_type := S_0_EVEN;
+  end component;
+
+  signal Q0, Q1, Q2 : std_logic;
+  signal J0, K0, J1, K1, J2, K2 : std_logic;
+
+  signal rst_tie : std_logic := '0';
+
 begin
-    state_register: process(Clk)
-    begin
-        if rising_edge(Clk) then
-            current_state <= next_state;
-        end if;
-    end process;
+  
+  J2 <= not X; 
+  K2 <= not X; 
 
-    next_state_logic: process(current_state, X)
-    begin
-        case current_state is
-            when S_0_EVEN =>
-                if X = '0' then next_state <= S_0_ODD; else next_state <= S_1_EVEN; end if;
-            when S_0_ODD =>
-                if X = '0' then next_state <= S_0_EVEN; else next_state <= S_1_ODD; end if;
-            when S_1_EVEN =>
-                if X = '0' then next_state <= S_1_ODD; else next_state <= S_2_EVEN; end if;
-            when S_1_ODD =>
-                if X = '0' then next_state <= S_1_EVEN; else next_state <= S_2_ODD; end if;
-            when S_2_EVEN =>
-                if X = '0' then next_state <= S_2_ODD; else next_state <= S_3_EVEN; end if;
-            when S_2_ODD =>
-                if X = '0' then next_state <= S_2_EVEN; else next_state <= S_3_ODD; end if;
-            when S_3_EVEN =>
-                if X = '0' then next_state <= S_3_ODD; else next_state <= S_0_EVEN; end if;
-            when S_3_ODD =>
-                if X = '0' then next_state <= S_3_EVEN; else next_state <= S_0_ODD; end if;
-            when others =>
-                next_state <= S_0_EVEN;
-        end case;
-    end process;
+  J1 <= Q0 and X; 
+  K1 <= Q0 and X; 
 
-    output_logic: process(current_state)
-    begin
-        case current_state is
-            when S_0_ODD => Z <= '1';
-            when others  => Z <= '0';
-        end case;
-    end process;
-end Behavioral;
+  J0 <= X; 
+  K0 <= X; 
+
+  Z <= Q2 and (not Q1) and (not Q0); 
+
+
+  FF2 : jk_flipflop PORT
+  map(
+  clk => Clk,
+  rst => rst_tie,
+  J   => J2,
+  K   => K2,
+  Q   => Q2
+  );
+
+  FF1 : jk_flipflop PORT
+  map(
+  clk => Clk,
+  rst => rst_tie,
+  J   => J1,
+  K   => K1,
+  Q   => Q1
+  );
+
+  FF0 : jk_flipflop PORT
+  map(
+  clk => Clk,
+  rst => rst_tie,
+  J   => J0,
+  K   => K0,
+  Q   => Q0
+  );
+
+end Structural;
 ```
 
 ## Mealy Architecture
